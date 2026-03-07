@@ -1,0 +1,28 @@
+@import 'tailwindcss';
+h1{
+  @apply text-4xl font-semibold py-16
+}
+h2{
+  @apply text-2xl font-semibold
+}
+h3{
+  @apply text-xl
+}
+p{
+  @apply text-gray-700
+}
+a{
+  @apply font-semibold
+}
+label{
+  @apply text-gray-700
+}
+input{
+  @apply p-2 border rounded-sm border-gray-400 focus:border-blue-500 outline-0 transition-all focus:ring-1 focus:ring-blue-500
+}
+.primaryBtn{
+  @apply bg-blue-500 text-white p-2 rounded-sm w-full
+}
+button{
+  @apply  text-white p-2 rounded-sm w-full
+}
