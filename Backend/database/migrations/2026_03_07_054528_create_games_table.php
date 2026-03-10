@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug');
             $table->text('description')->nullable();
+            $table->integer('total_score_submited')->default(0);
             $table->integer('created_by');
             $table->timestamps();
         });
