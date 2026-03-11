@@ -11,7 +11,4 @@ class Game extends Model
     function User(){
         return $this->belongsTo(User::class, 'created_by');
     }
-
-    function Tesetis($page = 0, $size = 10, $sortBy = 'title', $sortDir = "asc"){
-    }
 }

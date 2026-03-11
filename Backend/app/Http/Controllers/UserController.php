@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Game;
+use App\Models\Score;
 use App\Models\User;
 use App\Models\UserAdmin;
 use Illuminate\Http\Request;
@@ -121,5 +123,40 @@ class UserController extends Controller
         $user->delete();
 
         return response()->json([],204);
+    }
+
+    function show(string $username){
+        $user = User::where('username', $username)->first();
+        $games = Game::where('created_by',$user->id)->get();
+        $scores = Score::where('user_id', $user->id)->orderBy('score','desc')->get();
+
+        $games = $games->map(function ($game) {
+            return [
+                'slug'=>$game->slug,
+                'title'=>$game->title,
+                'description'=>$game->description
+            ];
+        })->toArray();
+
+        $scores = $scores->map(function($score){
+            $game = Game::where('id', $score->game_id)->first();
+            return[
+                'game'=>[
+                    'slug'=>$game->slug,
+                    'title'=>$game->title,
+                    'description'=>$game->description
+                ],
+                'score'=>$score->score,
+                'timestamp'=>$score->created_at
+            ];
+        })->toArray();
+
+        return response()->json([
+            'username'=>$user->username,
+            'registeredTimestamp'=>$user->created_at,
+            'authoredGames'=>$games,
+            'highscore'=>$scores
+        ]);
+
     }
 }
