@@ -1,6 +1,38 @@
-import { Link, Outlet } from "react-router-dom";
+import axios from "axios";
+import { useEffect } from "react";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 
 export default function DefaultUi(){
+
+      const token = localStorage.getItem('token')
+      const navigateTo = useNavigate()
+
+      useEffect(()=>{
+            if(!token){
+                  navigateTo('/signin')
+            }
+      },[token, navigateTo])
+
+      const logout = ()=>{
+            axios({
+                  method: 'post',
+                  url: 'http://localhost:8000/api/v1/auth/signout',
+                  headers:{
+                        'Authorization':'Bearer '+token
+                  }
+            })
+                  .then(response => {
+                        console.log(response)
+                        localStorage.removeItem('token')
+                        alert('Telah logout')
+                        navigateTo('/signin')
+                  })
+                  .catch(error => {
+                        alert(error.response.data.message)
+                        console.log(error)
+            });
+      }
+
       return(
             <>
                   <header className="bg-blue-600">
@@ -10,7 +42,7 @@ export default function DefaultUi(){
                                     <Link to={'games'}>Discover Games</Link>
                                     <Link to={'games/manage'}>Manage Games</Link>
                                     <Link to={'profile'}>Profile</Link>
-                                    <Link>Logout</Link>
+                                    <a onClick={logout}>Logout</a>
                               </nav>
                         </div>
                   </header>

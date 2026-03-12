@@ -1,6 +1,17 @@
-import { Link, Outlet } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 
 export default function GuestUi(){
+
+      const token = localStorage.getItem('token')
+      const navigateTo = useNavigate()
+
+      useEffect(()=>{
+            if(token){
+                  navigateTo('/home')
+            }
+      },[token, navigateTo])
+
       return(
             <>
                   <header className="bg-blue-600">

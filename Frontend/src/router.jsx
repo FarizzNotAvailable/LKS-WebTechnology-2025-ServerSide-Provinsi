@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import GuestUi from "./components/GuestUi";
 import DefaultUi from "./components/DefaultUi";
 import AdminUi from "./components/AdminUi";
@@ -26,6 +26,10 @@ const router = createBrowserRouter([
                   {
                         path:'/signup',
                         element: <Signup/>
+                  },
+                  {
+                        path:'/',
+                        element: <Navigate to={'/signin'}/>
                   },
             ]
       },
